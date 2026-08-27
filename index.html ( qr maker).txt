@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>QR Code Generator - Sharjkenjilal</title>
+
+    <script src="https://cdn.jsdelivr.net/npm/qrcodejs/qrcode.min.js"></script>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 30px;
+            background: #f2f2f2;
+        }
+
+        .box {
+            background: white;
+            padding: 20px;
+            max-width: 500px;
+            margin: auto;
+            border-radius: 15px;
+        }
+
+        textarea {
+            width: 90%;
+            padding: 12px;
+            margin: 10px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+        }
+
+        button {
+            padding: 12px 25px;
+            margin: 10px;
+            border: none;
+            border-radius: 8px;
+            background: black;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        #qrcode {
+            margin: 20px auto;
+            width: 256px;
+            height: 256px;
+        }
+
+        .footer {
+            margin-top: 20px;
+            font-size: 14px;
+            color: #555;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="box">
+
+        <h2>QR Code Generator</h2>
+
+        <p class="footer">
+            Made by Sharjkenjilal © 2026
+        </p>
+
+        <!-- এখানে তোমার লেখা লিখবে -->
+        <textarea
+            id="text"
+            placeholder="এখানে তোমার নাম বা যে লেখা QR Code-এ দিতে চাও সেটা লেখো"
+            rows="4"></textarea>
+
+        <br>
+
+        <label>QR Code Color:</label>
+
+        <input
+            type="color"
+            id="qrColor"
+            value="#000000"
+        >
+
+        <br>
+
+        <label>Background Color:</label>
+
+        <input
+            type="color"
+            id="bgColor"
+            value="#ffffff"
+        >
+
+        <br>
+
+        <button onclick="makeQR()">
+            Generate QR Code
+        </button>
+
+        <button onclick="downloadQR()">
+            Download QR Code
+        </button>
+
+        <div id="qrcode"></div>
+
+    </div>
+
+    <script>
+
+        function makeQR() {
+
+            const text = document.getElementById("text").value;
+
+            const qrColor = document.getElementById("qrColor").value;
+
+            const bgColor = document.getElementById("bgColor").value;
+
+            document.getElementById("qrcode").innerHTML = "";
+
+            new QRCode(
+                document.getElementById("qrcode"),
+                {
+                    text: text,
+                    width: 256,
+                    height: 256,
+                    colorDark: qrColor,
+                    colorLight: bgColor,
+                    correctLevel: QRCode.CorrectLevel.H
+                }
+            );
+        }
+
+        function downloadQR() {
+
+            const image = document.querySelector("#qrcode img");
+
+            if (!image) {
+                alert("আগে QR Code Generate করুন!");
+                return;
+            }
+
+            const link = document.createElement("a");
+
+            link.href = image.src;
+
+            link.download = "my-qrcode.png";
+
+            link.click();
+        }
+
+    </script>
+
+</body>
+</html>
